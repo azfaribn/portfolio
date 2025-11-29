@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- --- SEO & META TAGS --- -->
+    <title>Almi Yudianto | Creative Developer & Graphica Pro Founder</title>
+    <meta name="description" content="Portfolio of Almi Yudianto (AzfarIbn) - Web Developer, Digital Creator, and Founder of Graphica Pro creative studio based in Bogor, Indonesia.">
+    <meta name="keywords" content="Almi Yudianto, AzfarIbn, Web Developer, Portfolio, Graphica Pro, Digital Creator, Bogor, Frontend Developer">
+    <meta name="author" content="Almi Yudianto">
+
+    <!-- Favicon (Hanya muncul di Tab Browser) -->
+    <link rel="icon" type="image/png" href="GraphicaPro.png">
+
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website-url.com/"> <!-- GANTI INI SETELAH DEPLOY -->
+    <meta property="og:title" content="Almi Yudianto | Creative Developer Portfolio">
+    <meta property="og:description" content="Discover the web projects, digital creations, and creative services of Almi Yudianto.">
+    <meta property="og:image" content="https://your-website-url.com/path-to-your-preview-image.jpg"> 
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-website-url.com/"> 
+    <meta property="twitter:title" content="Almi Yudianto | Creative Developer Portfolio">
+    <meta property="twitter:description" content="Discover the web projects, digital creations, and creative services of Almi Yudianto.">
+    <meta property="twitter:image" content="https://your-website-url.com/path-to-your-preview-image.jpg"> 
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, .brand-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(6, 182, 212, 0.5); /* Cyan border on hover */
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #06b6d4;
+            border-radius: 4px;
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.7);
+        }
+
+        /* --- Language Switching Styles --- */
+        .lang-id {
+            display: none;
+        }
+        
+        body.id-active .lang-en {
+            display: none;
+        }
+        body.id-active .lang-id {
+            display: inline; 
+        }
+        body.id-active div.lang-id, 
+        body.id-active p.lang-id,
+        body.id-active ul.lang-id {
+            display: block;
+        }
+
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- 3D Canvas Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-white/10 bg-black/50 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-cyan-400 brand-font tracking-wider">AZFAR<span class="text-white">IBN</span></span>
+            </a>
+            <div class="flex md:order-2 items-center gap-2 md:gap-0 rtl:space-x-reverse">
+                <!-- Language Switcher Button -->
+                <button id="lang-toggle" type="button" class="mr-2 md:mr-4 text-gray-300 hover:text-white border border-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-2 text-center transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-language"></i>
+                    <span class="lang-en font-bold text-cyan-400">EN</span><span class="lang-en text-gray-500">|</span><span class="lang-en">ID</span>
+                    <span class="lang-id">EN</span><span class="lang-id text-gray-500">|</span><span class="lang-id font-bold text-cyan-400">ID</span>
+                </button>
+
+                <a href="#contact" class="text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+                    <span class="lang-en">Contact Me</span>
+                    <span class="lang-id">Kontak Saya</span>
+                </a>
+                <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none md:ml-2" aria-controls="navbar-sticky" aria-expanded="false" id="menu-toggle">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-700 rounded-lg bg-gray-900/80 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
+                    <li><a href="#home" class="block py-2 px-3 text-white hover:text-cyan-400 transition-colors"><span class="lang-en">Home</span><span class="lang-id">Beranda</span></a></li>
+                    <li><a href="#projects" class="block py-2 px-3 text-white hover:text-cyan-400 transition-colors"><span class="lang-en">Projects</span><span class="lang-id">Proyek</span></a></li>
+                    <li><a href="#graphica" class="block py-2 px-3 text-white hover:text-cyan-400 transition-colors">Graphica Pro</a></li>
+                    <li><a href="#socials" class="block py-2 px-3 text-white hover:text-cyan-400 transition-colors"><span class="lang-en">Socials</span><span class="lang-id">Sosial Media</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative pt-20">
+        <div class="text-center px-4 max-w-4xl mx-auto z-10">
+            <div class="mb-4 inline-block px-4 py-1 rounded-full border border-cyan-500/50 bg-cyan-900/20 text-cyan-300 text-sm tracking-widest uppercase animate-pulse">
+                <span class="lang-en">Available for Hire</span>
+                <span class="lang-id">Tersedia untuk Direkrut</span>
+            </div>
+            <h1 class="mb-4 text-5xl md:text-7xl font-extrabold tracking-tight leading-none text-white neon-text">
+                ALMI <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">YUDIANTO</span>
+            </h1>
+            <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 xl:px-48">
+                <span class="lang-en">Web Developer | Digital Creator | Founder of Graphica Pro</span>
+                <span class="lang-id">Pengembang Web | Kreator Digital | Pendiri Graphica Pro</span>
+            </p>
+            <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                <a href="#projects" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-900 transition-all border border-cyan-500 hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]">
+                    <span class="lang-en">View My Work</span>
+                    <span class="lang-id">Lihat Karya Saya</span>
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a href="https://saweria.co/azfaribn" target="_blank" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 bg-white transition-all">
+                    <i class="fa-solid fa-heart text-red-500 mr-2"></i> <span class="lang-en">Support Me</span><span class="lang-id">Dukung Saya</span>
+                </a>
+            </div>
+            
+            <!-- Quick Link Icons -->
+            <div class="flex justify-center space-x-6 text-2xl text-gray-400">
+                <a href="https://github.com/azfaribn" target="_blank" class="hover:text-white transition-colors hover:scale-110"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.wattpad.com/user/AzfarIbn" target="_blank" class="hover:text-orange-500 transition-colors hover:scale-110"><i class="fa-solid fa-book-open"></i></a>
+                <a href="https://azfaribn.tumblr.com/" target="_blank" class="hover:text-blue-400 transition-colors hover:scale-110"><i class="fa-brands fa-tumblr"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4">
+        <div class="max-w-screen-xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Featured <span class="text-cyan-400">Projects</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto lang-en">A collection of web applications and websites I have developed.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto lang-id">Koleksi aplikasi web dan website yang telah saya kembangkan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card Template -->
+                <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-code text-4xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-cyan-300 transition-colors">Pustaka Hadits</h3>
+                    <p class="text-gray-400 mb-4 text-sm lang-en">Complete digital hadith reference for Indonesia.</p>
+                    <p class="text-gray-400 mb-4 text-sm lang-id">Referensi hadits digital lengkap untuk Indonesia.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-xs bg-cyan-900/50 text-cyan-300 px-2 py-1 rounded border border-cyan-800">Next.js</span>
+                        <span class="text-xs bg-cyan-900/50 text-cyan-300 px-2 py-1 rounded border border-cyan-800">API</span>
+                    </div>
+                    <a href="https://pustaka-hadits-indonesia.vercel.app/" target="_blank" class="text-cyan-400 hover:text-white font-semibold inline-flex items-center">
+                        <span class="lang-en">Visit Site</span><span class="lang-id">Kunjungi Situs</span> <i class="fa-solid fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-globe text-4xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-green-300 transition-colors">Earth Tuner</h3>
+                    <p class="text-gray-400 mb-4 text-sm lang-en">Interactive earth-themed visualization or tool.</p>
+                    <p class="text-gray-400 mb-4 text-sm lang-id">Visualisasi atau tool interaktif bertema bumi.</p>
+                    <a href="https://earth-tuner.vercel.app/" target="_blank" class="text-green-400 hover:text-white font-semibold inline-flex items-center">
+                        <span class="lang-en">Visit Site</span><span class="lang-id">Kunjungi Situs</span> <i class="fa-solid fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-leaf text-4xl text-emerald-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-emerald-300 transition-colors">HerbaFlow</h3>
+                    <p class="text-gray-400 mb-4 text-sm lang-en">Herbal information or health platform.</p>
+                    <p class="text-gray-400 mb-4 text-sm lang-id">Platform informasi herbal atau kesehatan.</p>
+                    <a href="https://herbaflow.vercel.app/" target="_blank" class="text-emerald-400 hover:text-white font-semibold inline-flex items-center">
+                        <span class="lang-en">Visit Site</span><span class="lang-id">Kunjungi Situs</span> <i class="fa-solid fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-spa text-4xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-purple-300 transition-colors">ZenSpace</h3>
+                    <p class="text-gray-400 mb-4 text-sm lang-en">A digital space for relaxation and focus.</p>
+                    <p class="text-gray-400 mb-4 text-sm lang-id">Ruang digital untuk relaksasi dan fokus.</p>
+                    <a href="https://azfaribn.github.io/ZenSpace/" target="_blank" class="text-purple-400 hover:text-white font-semibold inline-flex items-center">
+                        <span class="lang-en">Visit Site</span><span class="lang-id">Kunjungi Situs</span> <i class="fa-solid fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-pen-nib text-4xl text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-yellow-300 transition-colors">AutoPoet</h3>
+                    <p class="text-gray-400 mb-4 text-sm lang-en">Automatic poem or writing generator.</p>
+                    <p class="text-gray-400 mb-4 text-sm lang-id">Generator puisi atau tulisan otomatis.</p>
+                    <a href="https://autopoet.netlify.app/" target="_blank" class="text-yellow-400 hover:text-white font-semibold inline-flex items-center">
+                        <span class="lang-en">Visit Site</span><span class="lang-id">Kunjungi Situs</span> <i class="fa-solid fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-heart text-4xl text-pink-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-pink-300 transition-colors">Undangan Resepsi</h3>
+                    <p class="text-gray-400 mb-4 text-sm lang-en">Elegant digital invitation website.</p>
+                    <p class="text-gray-400 mb-4 text-sm lang-id">Website undangan digital yang elegan.</p>
+                    <a href="https://undangan-resepsi.netlify.app/" target="_blank" class="text-pink-400 hover:text-white font-semibold inline-flex items-center">
+                        <span class="lang-en">Visit Site</span><span class="lang-id">Kunjungi Situs</span> <i class="fa-solid fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+                 <div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-hand-sparkles text-4xl text-rose-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 text-white group-hover:text-rose-300 transition-colors">Najla Nails Art</h3>
+                    <p class="text-gray-400 mb-4 text-sm lang-en">Nail art and beauty portfolio.</p>
+                    <p class="text-gray-400 mb-4 text-sm lang-id">Portofolio seni kuku dan kecantikan.</p>
+                    <a href="https://najlanailsart.netlify.app/" target="_blank" class="text-rose-400 hover:text-white font-semibold inline-flex items-center">
+                        <span class="lang-en">Visit Site</span><span class="lang-id">Kunjungi Situs</span> <i class="fa-solid fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Graphica Pro Section (Updated Image) -->
+    <section id="graphica" class="py-20 bg-gradient-to-b from-transparent to-black/80">
+        <div class="container mx-auto px-4">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border-l-4 border-l-orange-500">
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="md:w-1/2">
+                        <h2 class="text-4xl font-bold mb-4 flex items-center gap-3">
+                            <i class="fa-solid fa-layer-group text-orange-500"></i> GRAPHICA PRO
+                        </h2>
+                        <p class="text-gray-300 text-lg mb-6 leading-relaxed lang-en">
+                            A creative digital company providing high-quality graphic assets, design tutorials, and professional creative services.
+                        </p>
+                        <p class="text-gray-300 text-lg mb-6 leading-relaxed lang-id">
+                            Perusahaan digital kreatif yang menyediakan aset grafis berkualitas tinggi, tutorial desain, dan layanan kreatif profesional.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <a href="https://graphicapro.gumroad.com/" target="_blank" class="flex items-center gap-2 text-gray-400 hover:text-orange-400 transition-colors"><i class="fa-solid fa-store"></i> Gumroad Store</a>
+                            <a href="https://www.youtube.com/@GraphicaProID" target="_blank" class="flex items-center gap-2 text-gray-400 hover:text-red-500 transition-colors"><i class="fa-brands fa-youtube"></i> YouTube</a>
+                            <a href="https://www.patreon.com/c/GraphicaPro" target="_blank" class="flex items-center gap-2 text-gray-400 hover:text-orange-300 transition-colors"><i class="fa-brands fa-patreon"></i> Patreon</a>
+                            <a href="https://id.pinterest.com/graphicaprostudio/" target="_blank" class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors"><i class="fa-brands fa-pinterest"></i> Pinterest</a>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://www.instagram.com/graphicapro.store" class="bg-gradient-to-r from-orange-500 to-pink-500 p-2 rounded-full hover:scale-110 transition-transform"><i class="fa-brands fa-instagram text-white"></i></a>
+                            <a href="https://www.facebook.com/graphicapro" class="bg-blue-600 p-2 rounded-full hover:scale-110 transition-transform"><i class="fa-brands fa-facebook-f text-white"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- FOTO MEJA KERJA ANDA (Updated) -->
+                    <div class="md:w-1/2 w-full h-64 md:h-80 bg-black/50 rounded-xl border border-gray-700 flex items-center justify-center relative overflow-hidden group">
+                        <!-- Menggunakan file office-desk.jpg yang sudah Anda upload -->
+                        <div class="absolute inset-0 bg-[url('office-desk.jpg')] bg-cover bg-center opacity-70 group-hover:scale-110 transition-transform duration-700"></div>
+                        <div class="relative z-10 text-center">
+                            <h3 class="text-2xl font-bold text-white mb-2 shadow-black drop-shadow-md">Creative Studio</h3>
+                            <span class="text-orange-400 font-semibold drop-shadow-md">Bogor, Jawa Barat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content & Socials Grid -->
+    <section id="socials" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Connect & <span class="text-cyan-400">Content</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Personal Content -->
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-300 border-b border-gray-700 pb-2 lang-en">My Content</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-300 border-b border-gray-700 pb-2 lang-id">Konten Saya</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://azfaribn-shop.fourthwall.com/" target="_blank" class="flex items-center justify-between p-3 rounded bg-white/5 hover:bg-white/10 transition-colors">
+                                <span><i class="fa-solid fa-shirt mr-2 text-purple-400"></i> Merchandise Shop</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://azfarnote.blogspot.com/" target="_blank" class="flex items-center justify-between p-3 rounded bg-white/5 hover:bg-white/10 transition-colors">
+                                <span><i class="fa-brands fa-blogger mr-2 text-orange-400"></i> Blog / Notes</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.wattpad.com/user/AzfarIbn" target="_blank" class="flex items-center justify-between p-3 rounded bg-white/5 hover:bg-white/10 transition-colors">
+                                <span><i class="fa-solid fa-book mr-2 text-yellow-400"></i> Wattpad Stories</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Social Media -->
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-300 border-b border-gray-700 pb-2 lang-en">Social Media</h3>
+                    <h3 class="text-xl font-semibold mb-4 text-blue-300 border-b border-gray-700 pb-2 lang-id">Sosial Media</h3>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <a href="https://instagram.com/azfaribn" class="p-4 rounded-lg bg-gray-800 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 transition-all group">
+                            <i class="fa-brands fa-instagram text-2xl mb-1 group-hover:text-white"></i>
+                            <div class="text-xs text-gray-400 group-hover:text-white">IG</div>
+                        </a>
+                        <a href="https://twitter.com/azfaribn_" class="p-4 rounded-lg bg-gray-800 hover:bg-black transition-all group">
+                            <i class="fa-brands fa-x-twitter text-2xl mb-1 group-hover:text-white"></i>
+                            <div class="text-xs text-gray-400 group-hover:text-white">X</div>
+                        </a>
+                        <a href="https://facebook.com/azfaribn" class="p-4 rounded-lg bg-gray-800 hover:bg-blue-600 transition-all group">
+                            <i class="fa-brands fa-facebook text-2xl mb-1 group-hover:text-white"></i>
+                            <div class="text-xs text-gray-400 group-hover:text-white">FB</div>
+                        </a>
+                        <a href="https://youtube.com/azfaribn" class="p-4 rounded-lg bg-gray-800 hover:bg-red-600 transition-all group">
+                            <i class="fa-brands fa-youtube text-2xl mb-1 group-hover:text-white"></i>
+                            <div class="text-xs text-gray-400 group-hover:text-white">YT</div>
+                        </a>
+                        <a href="https://twitch.tv/azfaribn" class="p-4 rounded-lg bg-gray-800 hover:bg-purple-600 transition-all group">
+                            <i class="fa-brands fa-twitch text-2xl mb-1 group-hover:text-white"></i>
+                            <div class="text-xs text-gray-400 group-hover:text-white">Twitch</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="py-16">
+        <div class="text-center max-w-2xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 lang-en">Support My Work</h2>
+            <h2 class="text-2xl font-bold mb-6 lang-id">Dukung Karya Saya</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://saweria.co/azfaribn" target="_blank" class="px-6 py-3 rounded-full bg-yellow-500 text-black font-bold hover:bg-yellow-400 transition-colors shadow-lg shadow-yellow-500/20">
+                    <i class="fa-solid fa-gift mr-2"></i> Saweria
+                </a>
+                <a href="https://ko-fi.com/azfaribn" target="_blank" class="px-6 py-3 rounded-full bg-sky-500 text-white font-bold hover:bg-sky-400 transition-colors shadow-lg shadow-sky-500/20">
+                    <i class="fa-solid fa-coffee mr-2"></i> Ko-Fi
+                </a>
+                <a href="https://www.patreon.com/azfaribn" target="_blank" class="px-6 py-3 rounded-full bg-red-500 text-white font-bold hover:bg-red-400 transition-colors shadow-lg shadow-red-500/20">
+                    <i class="fa-brands fa-patreon mr-2"></i> Patreon
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="border-t border-gray-800 bg-black/80 backdrop-blur pt-12 pb-6">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-2 brand-font">ALMI YUDIANTO</h2>
+            <p class="text-gray-500 mb-8">Creative Developer & Entrepreneur</p>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-8 text-sm text-gray-400">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot text-cyan-500"></i>
+                    <span>Bogor, Jawa Barat</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-phone text-cyan-500"></i>
+                    <span>+62 813-3984-0493</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-envelope text-cyan-500"></i>
+                    <span>azfaribn@gmail.com</span> <!-- Placeholder email based on username -->
+                </div>
+            </div>
+
+            <div class="text-gray-600 text-sm">
+                &copy; <script>document.write(new Date().getFullYear())</script> Almi Yudianto (AzfarIbn). <span class="lang-en">All Rights Reserved.</span><span class="lang-id">Hak Cipta Dilindungi.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- 1. Mobile Menu Toggle ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbarSticky = document.getElementById('navbar-sticky');
+        
+        menuToggle.addEventListener('click', () => {
+            navbarSticky.classList.toggle('hidden');
+        });
+
+        // --- 2. Language Switcher Logic ---
+        const langToggleBtn = document.getElementById('lang-toggle');
+        const bodyElement = document.body;
+
+        // Cek apakah user sebelumnya sudah memilih bahasa (disimpan di Local Storage browser)
+        let currentLang = localStorage.getItem('preferredLang') || 'en'; // Default English
+
+        // Jika preferensi sebelumnya adalah Indonesia, aktifkan class 'id-active'
+        if (currentLang === 'id') {
+            bodyElement.classList.add('id-active');
+            document.documentElement.lang = 'id'; // Ubah atribut lang di tag html
+        }
+
+        // Event listener saat tombol switch diklik
+        langToggleBtn.addEventListener('click', () => {
+            // Toggle class 'id-active' di body
+            bodyElement.classList.toggle('id-active');
+            
+            // Tentukan bahasa aktif berdasarkan ada/tidaknya class 'id-active'
+            if (bodyElement.classList.contains('id-active')) {
+                currentLang = 'id';
+                document.documentElement.lang = 'id';
+            } else {
+                currentLang = 'en';
+                document.documentElement.lang = 'en';
+            }
+            
+            // Simpan preferensi bahasa user ke Local Storage agar diingat browser
+            localStorage.setItem('preferredLang', currentLang);
+        });
+
+
+        // --- 3. Three.js 3D Background (Starfield Effect) ---
+        const initThreeJS = () => {
+            const container = document.getElementById('canvas-container');
+            // Cek jika container ada sebelum lanjut (untuk menghindari error)
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            
+            // Camera
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Particles Geometry
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 2000; // Jumlah bintang
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                // Menyebar partikel di area yang luas
+                posArray[i] = (Math.random() - 0.5) * 15; 
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            // Particles Material
+            const material = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x06b6d4, // Warna Cyan
+                transparent: true,
+                opacity: 0.8,
+            });
+
+            // Mesh
+            const particlesMesh = new THREE.Points(particlesGeometry, material);
+            scene.add(particlesMesh);
+
+            // Mouse Interaction Variables
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - windowHalfX);
+                mouseY = (event.clientY - windowHalfY);
+            });
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Animation Loop
+            const clock = new THREE.Clock();
+
+            const animate = () => {
+                targetX = mouseX * 0.001;
+                targetY = mouseY * 0.001;
+
+                const elapsedTime = clock.getElapsedTime();
+
+                // Rotasi otomatis pelan
+                particlesMesh.rotation.y = elapsedTime * 0.05;
+                particlesMesh.rotation.x = elapsedTime * 0.02;
+
+                // Interaksi Mouse (membuat partikel sedikit mengikuti mouse dengan smooth)
+                particlesMesh.rotation.y += 0.05 * (targetX - particlesMesh.rotation.y);
+                particlesMesh.rotation.x += 0.05 * (targetY - particlesMesh.rotation.x);
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            };
+
+            animate();
+        };
+
+        // Initialize 3D Scene
+        // Bungkus dalam DOMContentLoaded agar aman
+        document.addEventListener('DOMContentLoaded', initThreeJS);
+
+        // --- 4. Smooth Anchor Scrolling for Safari/Old browsers fallback ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Tutup mobile menu jika sedang terbuka setelah klik link
+                    if (!navbarSticky.classList.contains('hidden')) {
+                        navbarSticky.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
